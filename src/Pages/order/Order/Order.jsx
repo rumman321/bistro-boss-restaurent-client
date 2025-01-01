@@ -25,7 +25,7 @@ const Order = () => {
   const pizza = menus.filter((item) => item.category == "pizza");
   const drinks = menus.filter((item) => item.category == "drinks");
   return (
-    <div>
+    <div className="mb-20">
       <Helmet>
         <title>Bistro|| Order</title>
       </Helmet>
@@ -34,7 +34,7 @@ const Order = () => {
         title={"Order now"}
         subTitle={"Order Your Favorite Food Now"}
       ></Cover>
-      <Tabs defaultIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
+      <Tabs className="mt-10" defaultIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
         <TabList>
           <Tab>Salad</Tab>
           <Tab>Pizza</Tab>
