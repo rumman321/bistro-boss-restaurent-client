@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   loadCaptchaEnginge,
   LoadCanvasTemplate,
@@ -6,13 +6,18 @@ import {
   validateCaptcha,
 } from "react-simple-captcha";
 import { AuthContext } from "../../provider/AuthProvider";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+import Swal from "sweetalert2";
 
 const Login = () => {
-    const {signIn}= useContext(AuthContext)
-    const captchaRef = useRef(null)
-    const [text, setText] = useState('Check')
-    const [disable, setDisable] = useState(true)
+  const { signIn } = useContext(AuthContext);
+  
+  const [text, setText] = useState("Check");
+  const [disable, setDisable] = useState(true);
+  const navigate= useNavigate()
+  const location = useLocation()
+  const from = location.state?.from?.pathname || "/";
   useEffect(() => {
     loadCaptchaEnginge(6);
   }, []);
@@ -22,28 +27,36 @@ const Login = () => {
     const email = form.email.value;
     const password = form.password.value;
     console.log(email, password);
-    signIn(email,password)
-    .then(result=>{
+    signIn(email, password).then((result) => {
       const user = result.user;
-      console.log("User : ",user);
-
-    })
+      console.log("User : ", user);
+      Swal.fire({
+              title: "SignUp Success!",
+              icon: "success",
+              draggable: true
+            });
+            navigate(from, { replace: true })
+    });
   };
   const handleValidateCaptcha = (e) => {
-    const user_captcha_value = captchaRef.current.value
-    if(validateCaptcha(user_captcha_value) == true){
-        console.log("Captcha Matched");
-        setDisable(false)
-        setText('Checked')
-    }else{
-        alert("Captcha Not Matched");
-        setDisable(true)
-
-    }
+    const user_captcha_value = e.target.value;
+    if (validateCaptcha(user_captcha_value) == true) {
+      alert("Captcha Matched");
+      setDisable(false);
+      setText("Matched");
+    } else {
+      alert("Captcha Not Matched");
+      setDisable(true);
     
-  }
+    }
+
+    
+  };
   return (
     <div className="hero bg-base-200 min-h-screen">
+      <Helmet>
+        <title>Bistro||Login</title>
+      </Helmet>
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Login now!</h1>
@@ -89,31 +102,35 @@ const Login = () => {
                 <LoadCanvasTemplate />
               </label>
               <input
+                onBlur={handleValidateCaptcha}
                 type="text"
-                ref={captchaRef}
+                
                 name="captcha"
                 placeholder="type the captcha"
                 className="input input-bordered"
                 required
               />
-              <button
-                onClick={handleValidateCaptcha}
-                className="btn btn-outline btn-xs mt-2"
-              >
-                {text}
-              </button>
+              <p>{text}</p>
+              
 
-              {/* <label className="label">
-                <a href="#" className="label-text-alt link link-hover">
-                  Check Captcha
-                </a>
-              </label> */}
+              
             </div>
             <div className="form-control mt-6">
-              <input disabled={disable} value="login" type="submit" className="btn btn-primary" />
+              <input
+              //applying disable attribute for re Captcha
+                disabled={false}
+                value="login"
+                type="submit"
+                className="btn btn-primary"
+              />
             </div>
           </form>
-          <p> <small>new here ! Please <Link to="/signup">SignUp</Link></small></p>
+          <p className="text-center card-footer">
+            {" "}
+            <small>
+              new here ! Please <Link to="/signup">SignUp</Link>
+            </small>
+          </p>
         </div>
       </div>
     </div>

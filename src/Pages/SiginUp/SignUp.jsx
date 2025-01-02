@@ -1,16 +1,48 @@
+import { useContext } from "react";
+import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
+import { AuthContext } from "../../provider/AuthProvider";
+import Swal from 'sweetalert2'
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const { createUser, updateUserProfile } = useContext(AuthContext);
+  
+  const navigate = useNavigate()
+  const location = useLocation()
+
   const {
     register,
     handleSubmit,
+    reset,
     watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
-  console.log(watch("name")); // watch input value by passing the name of it
+  const onSubmit = (data) => { 
+    console.log(data)
+    createUser(data.email, data.password)
+    .then(res=>{
+      console.log(res)
+      Swal.fire({
+        title: "SignUp Success!",
+        icon: "success",
+        draggable: true
+      });
+      updateUserProfile(data.name, data.photo)
+      .then(()=>{
+        console.log("Profile Updated")
+        reset()
+        navigate("/")
+      })
+      
+    })
+  };
+  console.log(watch("password")); // watch input value by passing the name of it
   return (
-    <div className="hero bg-base-200 min-h-screen">
+    <div  className="hero bg-base-200 min-h-screen">
+      <Helmet>
+        <title>Bistro||SignUp</title>
+      </Helmet>
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Sign Up now!</h1>
@@ -40,6 +72,22 @@ const SignUp = () => {
             )}
             <div className="form-control">
               <label className="label">
+                <span className="label-text">Photo</span>
+              </label>
+              <input
+                type="text"
+                {...register("photo", { required: true })}
+                name="photo"
+                placeholder="Photo URL"
+                className="input input-bordered"
+              />
+            </div>
+            {/* errors will return when field validation fails  */}
+            {errors.photo && (
+              <span className="text-red-600">Photo is required</span>
+            )}
+            <div className="form-control">
+              <label className="label">
                 <span className="label-text">Email</span>
               </label>
               <input
@@ -63,27 +111,38 @@ const SignUp = () => {
                 {...register("password", {
                   required: true,
                   minLength: 6,
-                  pattern: / ^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])$ /
+                  pattern: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%#*?&]+$/,
                 })}
                 placeholder="password"
                 className="input input-bordered"
               />
             </div>
-            {errors.password?.type == 'required' && (
-              <span className="text-red-600">password is required</span>
+            {errors.password?.type === "required" && (
+              <span className="text-red-600">Password is required</span>
             )}
-            {errors.password?.type == "minLength" && (
+            {errors.password?.type === "minLength" && (
               <span className="text-red-600">
-                password must be 6 character or more
+                Password must be 6 characters or more
               </span>
             )}
-            {errors.password?.type == 'pattern' && (
-              <span className="text-red-600">password must have one uppercase letters . one special case letter.one digits. one lowercase letters.</span>
+            {errors.password?.type === "pattern" && (
+              <span className="text-red-600">
+                Password must have one uppercase letter, one special character,
+                one digit, and one lowercase letter
+              </span>
             )}
+
             <div className="form-control mt-6">
-              <button className="btn btn-primary">SignUp</button>
+              <input
+                type="submit"
+                value="Sign Up"
+                className="btn btn-primary"
+              />
+              
+              {/* <button className="btn btn-primary">SignUp</button> */}
             </div>
           </form>
+          <p> Already Have an Account <Link to="/login"> login</Link> </p>
         </div>
       </div>
     </div>

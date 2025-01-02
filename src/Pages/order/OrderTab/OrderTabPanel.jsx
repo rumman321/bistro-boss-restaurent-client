@@ -16,12 +16,13 @@ const OrderTabPanel = ({ item }) => {
     },
   };
   return (
-    <div>
+    <div className="mb-20">
       <Swiper
         pagination={pagination}
         modules={[Pagination]}
-        className="mySwiper"
+        className="mySwiper "
         slidesPerView={3}
+        spaceBetween={50}
       >
          {item?.map((item) => (
         <SwiperSlide key={item._id}>

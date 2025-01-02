@@ -1,12 +1,21 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../provider/AuthProvider";
+import { FaCartArrowDown } from "react-icons/fa";
 
 const Navbar = () => {
+  const { user, logOut } = useContext(AuthContext);
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {})
+      .catch((err) => console.log(err));
+  };
   const navOptions = (
     <>
       <li>
         <Link to="/">Home</Link>
       </li>
-      
+
       <li>
         <Link to="/menu">Menu</Link>
       </li>
@@ -14,8 +23,26 @@ const Navbar = () => {
         <Link to="/order">Order</Link>
       </li>
       <li>
-        <Link to="/login">Login</Link>
+        <Link to="/secret">secret</Link>
       </li>
+      <li>
+        <Link to="/">
+          <FaCartArrowDown  size={20}/>
+          <div className="badge badge-secondary">+0</div>
+        </Link>
+      </li>
+
+      {user?.email ? (
+        <li onClick={handleLogOut}>
+          <span>
+            <strong>logout</strong>
+          </span>
+        </li>
+      ) : (
+        <li>
+          <Link to="/login">Login</Link>
+        </li>
+      )}
     </>
   );
   return (
@@ -41,17 +68,15 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              className="menu menu-sm  dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
-             {navOptions}
+              {navOptions}
             </ul>
           </div>
           <a className="btn btn-ghost text-xl">daisyUI</a>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
-            {navOptions}
-          </ul>
+          <ul className="menu menu-horizontal px-1">{navOptions}</ul>
         </div>
         <div className="navbar-end">
           <a className="btn">Button</a>
