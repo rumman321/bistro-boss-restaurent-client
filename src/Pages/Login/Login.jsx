@@ -9,6 +9,7 @@ import { AuthContext } from "../../provider/AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
+import GoogleLogin from "../../Componnets/socialLogin/GoogleLogin";
 
 const Login = () => {
   const { signIn } = useContext(AuthContext);
@@ -131,6 +132,7 @@ const Login = () => {
               new here ! Please <Link to="/signup">SignUp</Link>
             </small>
           </p>
+          <GoogleLogin></GoogleLogin>
         </div>
       </div>
     </div>

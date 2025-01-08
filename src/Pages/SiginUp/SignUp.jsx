@@ -4,8 +4,11 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../provider/AuthProvider";
 import Swal from 'sweetalert2'
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import GoogleLogin from "../../Componnets/socialLogin/GoogleLogin";
 
 const SignUp = () => {
+  const axiosPublic = useAxiosPublic()
   const { createUser, updateUserProfile } = useContext(AuthContext);
   
   const navigate = useNavigate()
@@ -21,7 +24,8 @@ const SignUp = () => {
   const onSubmit = (data) => { 
     console.log(data)
     createUser(data.email, data.password)
-    .then(res=>{
+    .then(res=>{ 
+      
       console.log(res)
       Swal.fire({
         title: "SignUp Success!",
@@ -30,9 +34,20 @@ const SignUp = () => {
       });
       updateUserProfile(data.name, data.photo)
       .then(()=>{
-        console.log("Profile Updated")
-        reset()
-        navigate("/")
+        //create user entry in database
+      const userInfo = {
+        name:data.name,
+        email : data.email
+      }
+      axiosPublic.post("/users", userInfo)
+      .then(res =>{
+        if(res.data.insertedId){
+          reset()
+          navigate("/")
+        }
+      })
+        
+        
       })
       
     })
@@ -142,7 +157,8 @@ const SignUp = () => {
               {/* <button className="btn btn-primary">SignUp</button> */}
             </div>
           </form>
-          <p> Already Have an Account <Link to="/login"> login</Link> </p>
+          <p className="text-center"> Already Have an Account <Link to="/login"> login</Link> </p>
+          <GoogleLogin></GoogleLogin>
         </div>
       </div>
     </div>

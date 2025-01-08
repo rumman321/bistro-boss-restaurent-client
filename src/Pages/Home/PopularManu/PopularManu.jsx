@@ -6,7 +6,7 @@ const PopularManu = () => {
   const [menus] = useMenu();
   const popular = menus.filter((item) => item.category == "popular");
   
-  console.log(menus);
+  
   return (
     <section>
       <SectionTitle
