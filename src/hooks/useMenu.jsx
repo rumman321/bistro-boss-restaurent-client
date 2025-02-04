@@ -7,7 +7,7 @@ const useMenu = () => {
   const axiosPublic = useAxiosSecure();
   // const [loading,setLoading]=useState(true)
   //   useEffect(() => {
-  //     fetch("https://bristo-boss-server-chi.vercel.app/menu")
+  //     fetch("http://localhost:5000/menu")
   //       .then((res) => res.json())
   //       .then((data) => {
   //         setLoading(false)

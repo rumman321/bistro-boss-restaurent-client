@@ -40,7 +40,7 @@ const Cart = () => {
       <div className="flex justify-between items-center">
         <h2>total Order : {cart.length}</h2>
         <h2>total Price : $ {totalPrice}</h2>
-        {cart.length ?<Link to="/dashboard/payment">
+        {cart.length ?<Link to="/dashboard/pay">
         <button className="btn btn-primary">Pay</button>
         </Link>:
           <button disabled className="btn btn-primary">Pay</button>

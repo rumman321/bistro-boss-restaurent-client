@@ -12,7 +12,7 @@ import {
   FaUtensils,
 } from "react-icons/fa";
 import { RiMenuSearchFill } from "react-icons/ri";
-import { MdEmail } from "react-icons/md";
+import { MdEmail, MdMoney } from "react-icons/md";
 import { NavLink, Outlet } from "react-router-dom";
 import useCart from "../hooks/useCart";
 import useAdmin from "../hooks/useAdmin";
@@ -89,6 +89,8 @@ const Dashboard = () => {
                   <FaStar></FaStar> Review
                 </NavLink>
               </li>
+              
+
             </>
           )}
           <div className="divider "></div>

@@ -18,6 +18,8 @@ import Payment from "../Pages/Dashboard/Payment/Payment";
 import PaymentHistory from "../Pages/Dashboard/paymentHistory/PaymentHistory";
 import UserHome from "../Pages/Dashboard/UserHome/UserHome";
 import AdminHome from "../Pages/Dashboard/AdminHome/AdminHome";
+import SSLCommerzPayment from "../Pages/Dashboard/sslcommerzPayment/SSLCommerzPayment";
+import Pay from "../Pages/Dashboard/Pay/Pay";
 
 export const router = createBrowserRouter([
   {
@@ -33,70 +35,108 @@ export const router = createBrowserRouter([
         element: <Menu></Menu>,
       },
       {
-        path: "/order",       
-        element: <Order></Order> ,
+        path: "/order",
+        element: <Order></Order>,
       },
       {
-        path: "/order/:category",     
-        element: <Order></Order> ,
+        path: "/order/:category",
+        element: <Order></Order>,
       },
       {
-        path:"/login",
-        element:<Login></Login>
+        path: "/login",
+        element: <Login></Login>,
       },
       {
-        path:"/signup",
-        element:<SignUp></SignUp>
+        path: "/signup",
+        element: <SignUp></SignUp>,
       },
       {
-        path:"/secret",
-        element: <PrivateRoute><Secret></Secret></PrivateRoute>
-      }
+        path: "/secret",
+        element: (
+          <PrivateRoute>
+            <Secret></Secret>
+          </PrivateRoute>
+        ),
+      },
     ],
   },
   {
     path: "/dashboard",
-    element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute> ,
+    element: (
+      <PrivateRoute>
+        <Dashboard></Dashboard>
+      </PrivateRoute>
+    ),
     children: [
       //normal users
       {
         path: "cart",
-        element: <Cart></Cart>
+        element: <Cart></Cart>,
       },
       {
         path: "userHome",
-        element: <UserHome></UserHome>
+        element: <UserHome></UserHome>,
       },
       {
-        path:"payment",
-        element: <Payment></Payment>
+        path: "pay",
+        element: <Pay></Pay>,
+      },
+
+      {
+        path: "payment",
+        element: <Payment></Payment>,
       },
       {
-        path:"paymentHistory",
-        element:<PaymentHistory></PaymentHistory>
+        path: "sslPayment",
+        element: <SSLCommerzPayment></SSLCommerzPayment>,
+      },
+      {
+        path: "paymentHistory",
+        element: <PaymentHistory></PaymentHistory>,
       },
       //admin routes
       {
         path: "addItems",
-        element: <AdminRoute><AddItems></AddItems></AdminRoute>
+        element: (
+          <AdminRoute>
+            <AddItems></AddItems>
+          </AdminRoute>
+        ),
       },
       {
         path: "adminHome",
-        element: <AdminRoute><AdminHome></AdminHome></AdminRoute>
+        element: (
+          <AdminRoute>
+            <AdminHome></AdminHome>
+          </AdminRoute>
+        ),
       },
       {
         path: "allUsers",
-        element:<AdminRoute><AllUser></AllUser></AdminRoute>
+        element: (
+          <AdminRoute>
+            <AllUser></AllUser>
+          </AdminRoute>
+        ),
       },
       {
         path: "manageItem",
-        element:<AdminRoute><MangeItems></MangeItems> </AdminRoute>
+        element: (
+          <AdminRoute>
+            <MangeItems></MangeItems>{" "}
+          </AdminRoute>
+        ),
       },
       {
         path: "updateItem/:id",
-        element:<AdminRoute><UpdateItem></UpdateItem> </AdminRoute>,
-        loader: ({params})=> fetch(`https://bristo-boss-server-chi.vercel.app/menu/${params.id}`)
-      }
-    ],      
-  }
+        element: (
+          <AdminRoute>
+            <UpdateItem></UpdateItem>{" "}
+          </AdminRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/menu/${params.id}`),
+      },
+    ],
+  },
 ]);
