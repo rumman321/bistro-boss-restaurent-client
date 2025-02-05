@@ -10,7 +10,8 @@ const SSLCommerzPayment = () => {
   const navigate = useNavigate();
   const totalPrice = cart.reduce((total, item) => total + item.price, 0);
 
-  const handleCreatePayment = async () => {
+  const handleCreatePayment = async (e) => {
+     e.preventDefault()
     const payment = {
       email: user?.email,
       price: totalPrice,
@@ -25,6 +26,9 @@ const SSLCommerzPayment = () => {
       "http://localhost:5000/create-ssl-payment",
       payment
     );
+    if(response.data?.gatewayUrl){
+      window.location.replace(response.data.gatewayUrl)
+    }
     console.log("ssl response: ", response);
   };
 
@@ -65,7 +69,7 @@ const SSLCommerzPayment = () => {
           />
         </label>
         <button className="btn w-full mt-5" onClick={handleCreatePayment}>Place Order</button> */}
-        <form className="card-body">
+        <form className="card-body" onSubmit={handleCreatePayment}>
           <div className="form-control">
             <label className="label">
               <span className="label-text">Email</span>
@@ -74,12 +78,16 @@ const SSLCommerzPayment = () => {
               type="email"
               placeholder="email"
               className="input input-bordered"
+              value={user?.email}
+              readOnly
               required
             />
           </div>
-         
+
           <div className="form-control mt-6">
-            <button className="btn btn-primary" onClick={handleCreatePayment}>Login</button>
+            <button className="btn btn-primary" type="submit" >
+              Pay
+            </button>
           </div>
         </form>
       </div>
