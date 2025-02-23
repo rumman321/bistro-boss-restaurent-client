@@ -20,7 +20,7 @@ const CategorySlide2 = () => {
     <div className="mb-10 ">
       <section>
         <SectionTitle 
-        subHeading={"from 11:00 AM to 10:00 PM"}
+        subHeading={"From 11:00 AM to 10:00 PM"}
         heading={"Order Online"}
         >
         

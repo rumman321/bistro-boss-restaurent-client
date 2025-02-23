@@ -9,7 +9,7 @@ const MainLayout = () => {
     const isLogin = location.pathname == '/login' || location.pathname == '/signup'
     console.log(location)   
     return (
-        <div>
+        <div className='max-w-screen-lg mx-auto'>
             {isLogin || <Navbar></Navbar>}
             <div className='min-h-[70vh]'><Outlet></Outlet></div>
             {isLogin || <Footer></Footer>}

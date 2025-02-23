@@ -13,7 +13,7 @@ const MenuCategory = ({ items ,coverImg,title,subTitle}) => {
       </div>
       <div className="text-center">
       <Link to={`/order/${title?.toLowerCase()}`}>
-      <button className="btn btn-outline border-0 border-b-2 uppercase "> order your favorite food</button></Link>
+      <button className="btn btn-outline border-0 border-b-2 hover:bg-red-500 uppercase "> order your favorite food</button></Link>
       </div>
     </div>
   );

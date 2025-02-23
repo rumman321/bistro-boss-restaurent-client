@@ -15,7 +15,7 @@ const SSLCommerzPayment = () => {
     const payment = {
       email: user?.email,
       price: totalPrice,
-      transactionIds: "",
+      transactionId: "",
       date: new Date(),
       cartIds: cart?.map((item) => item._id),
       menuItemIds: cart?.map((item) => item.menuId),
@@ -23,7 +23,7 @@ const SSLCommerzPayment = () => {
     };
 
     const response = await axios.post(
-      "http://localhost:5000/create-ssl-payment",
+      "https://bristo-boss-server-chi.vercel.app/create-ssl-payment",
       payment
     );
     if(response.data?.gatewayUrl){

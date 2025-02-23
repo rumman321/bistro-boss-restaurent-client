@@ -7,117 +7,118 @@ import {
   FaList,
   FaShoppingCart,
   FaStar,
-  FaStarOfLife,
   FaUsers,
   FaUtensils,
+  FaBars, // Added for toggle icon
 } from "react-icons/fa";
 import { RiMenuSearchFill } from "react-icons/ri";
-import { MdEmail, MdMoney } from "react-icons/md";
 import { NavLink, Outlet } from "react-router-dom";
 import useCart from "../hooks/useCart";
 import useAdmin from "../hooks/useAdmin";
+import { useState } from "react";
 
 const Dashboard = () => {
   const [cart] = useCart();
-  //
   const [isAdmin] = useAdmin();
-  console.log("is admin ", isAdmin);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for sidebar toggle
+
+  // Function to toggle sidebar
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
-    <div className="flex">
-      {/* sidebar */}
-      <div className="w-64 min-h-screen bg-orange-500 ">
-        <ul className="menu">
+    <div className="flex flex-col sm:flex-row">
+      {/* Sidebar */}
+      <div
+        className={`w-full sm:w-64 min-h-screen bg-orange-500 p-4 sm:p-6 ${
+          isSidebarOpen ? "block" : "hidden"
+        } sm:block`} // Sidebar visibility toggle for mobile (hidden by default)
+      >
+        <ul className="menu font-bold text-white">
           {isAdmin ? (
             <>
-             
               <li>
-                <NavLink to="/dashboard/adminHome">
-                  {" "}
-                  <FaHome></FaHome> Admin Home
+                <NavLink to="/dashboard/adminHome" onClick={() => setIsSidebarOpen(false)}>
+                  <FaHome /> Admin Home
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/dashboard/addItems">
-                <FaUtensils /> Add Items
-                </NavLink>
-              </li>
-
-              <li>
-                <NavLink to="/dashboard/manageItem">
-                  {" "}
-                  <FaList /> Manage Item
+                <NavLink to="/dashboard/addItems" onClick={() => setIsSidebarOpen(false)}>
+                  <FaUtensils /> Add Items
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/dashboard/booking">
-                <FaAddressBook /> Manage Bookings
+                <NavLink to="/dashboard/manageItem" onClick={() => setIsSidebarOpen(false)}>
+                  <FaList /> Manage Items
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/dashboard/allUsers">
-                <FaUsers /> All Users
+                <NavLink to="/dashboard/feedback" onClick={() => setIsSidebarOpen(false)}>
+                  <FaAddressBook /> User Feedback
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/allUsers" onClick={() => setIsSidebarOpen(false)}>
+                  <FaUsers /> All Users
                 </NavLink>
               </li>
             </>
           ) : (
             <>
               <li>
-                <NavLink to="/dashboard/cart">
-                  <FaShoppingCart></FaShoppingCart> my Cart : {cart.length}
+                <NavLink to="/dashboard/cart" onClick={() => setIsSidebarOpen(false)}>
+                  <FaShoppingCart /> My Cart: {cart.length}
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/dashboard/userHome">
-                  {" "}
-                  <FaHome></FaHome> User Home
+                <NavLink to="/dashboard/userHome" onClick={() => setIsSidebarOpen(false)}>
+                  <FaHome /> User Home
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/dashboard/reservation">
-                  <FaCalendar></FaCalendar> Reservation
-                </NavLink>
-              </li>
-
-              <li>
-                <NavLink to="/dashboard/paymentHistory">
-                  {" "}
-                  <FaCalendarCheck></FaCalendarCheck> my Payment
+                <NavLink to="/dashboard/reservation" onClick={() => setIsSidebarOpen(false)}>
+                  <FaCalendar /> Reservation
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/dashboard/review">
-                  <FaStar></FaStar> Review
+                <NavLink to="/dashboard/paymentHistory" onClick={() => setIsSidebarOpen(false)}>
+                  <FaCalendarCheck /> My Payment
                 </NavLink>
               </li>
-              
-
+              <li>
+                <NavLink to="/dashboard/review" onClick={() => setIsSidebarOpen(false)}>
+                  <FaStar /> Review
+                </NavLink>
+              </li>
             </>
           )}
-          <div className="divider "></div>
+          <div className="divider"></div>
           <li>
-            <NavLink to="/">
-              {" "}
-              <FaHome></FaHome> Home
+            <NavLink to="/" onClick={() => setIsSidebarOpen(false)}>
+              <FaHome /> Home
             </NavLink>
           </li>
           <li>
-            <NavLink to="/menu">
-              {" "}
+            <NavLink to="/menu" onClick={() => setIsSidebarOpen(false)}>
               <RiMenuSearchFill /> Menu
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/contact">
-              {" "}
-              <MdEmail /> Contact
             </NavLink>
           </li>
         </ul>
       </div>
-      {/* main content */}
-      <div className="flex-1 border-green-500 border-2 p-10">
-        <Outlet></Outlet>
+
+      {/* Main content */}
+      <div className="flex-1  border-2 p-6">
+        <Outlet />
       </div>
+
+      {/* Toggle Sidebar Button (for mobile) */}
+      <button
+        className="fixed top-4 left-4 sm:hidden text-white bg-orange-500 p-2 rounded-full"
+        onClick={toggleSidebar}
+      >
+        <FaBars />
+      </button>
     </div>
   );
 };

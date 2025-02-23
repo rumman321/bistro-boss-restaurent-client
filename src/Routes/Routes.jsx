@@ -20,6 +20,7 @@ import UserHome from "../Pages/Dashboard/UserHome/UserHome";
 import AdminHome from "../Pages/Dashboard/AdminHome/AdminHome";
 import SSLCommerzPayment from "../Pages/Dashboard/sslcommerzPayment/SSLCommerzPayment";
 import Pay from "../Pages/Dashboard/Pay/Pay";
+import Feedback from "../Componnets/Feedback/Feedback";
 
 export const router = createBrowserRouter([
   {
@@ -112,6 +113,14 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path:"feedback",
+        element:(
+          <AdminRoute>
+            <Feedback></Feedback>
+          </AdminRoute>
+        )
+      },
+      {
         path: "allUsers",
         element: (
           <AdminRoute>
@@ -135,7 +144,7 @@ export const router = createBrowserRouter([
           </AdminRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/menu/${params.id}`),
+          fetch(`https://bristo-boss-server-chi.vercel.app/menu/${params.id}`),
       },
     ],
   },
