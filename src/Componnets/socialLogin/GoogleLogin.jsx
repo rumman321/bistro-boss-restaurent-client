@@ -25,8 +25,8 @@ const GoogleLogin = () => {
         })
     }
   return (
-    <div className="text-center my-2">
-      <button onClick={handleGoogleSignIn} className="btn">
+    <div className="text-center my-2 ">
+      <button onClick={handleGoogleSignIn} className="btn w-full hover:bg-red-500">
       <FaGoogle />
         GOOGLE
       </button>

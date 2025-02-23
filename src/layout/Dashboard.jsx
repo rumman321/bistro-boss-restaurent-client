@@ -76,11 +76,7 @@ const Dashboard = () => {
                   <FaHome /> User Home
                 </NavLink>
               </li>
-              <li>
-                <NavLink to="/dashboard/reservation" onClick={() => setIsSidebarOpen(false)}>
-                  <FaCalendar /> Reservation
-                </NavLink>
-              </li>
+              
               <li>
                 <NavLink to="/dashboard/paymentHistory" onClick={() => setIsSidebarOpen(false)}>
                   <FaCalendarCheck /> My Payment

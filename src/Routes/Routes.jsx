@@ -79,6 +79,10 @@ export const router = createBrowserRouter([
         element: <UserHome></UserHome>,
       },
       {
+        path:"review",
+        element:<Feedback></Feedback>
+      },
+      {
         path: "pay",
         element: <Pay></Pay>,
       },

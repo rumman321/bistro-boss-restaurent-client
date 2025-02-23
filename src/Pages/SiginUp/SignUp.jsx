@@ -6,6 +6,8 @@ import Swal from 'sweetalert2'
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import GoogleLogin from "../../Componnets/socialLogin/GoogleLogin";
+import lottieSignup from "../../assets/mylottie/login2.json"
+import Lottie from "lottie-react";
 
 const SignUp = () => {
   const axiosPublic = useAxiosPublic()
@@ -59,13 +61,11 @@ const SignUp = () => {
         <title>Bistro||SignUp</title>
       </Helmet>
       <div className="hero-content flex-col lg:flex-row-reverse">
-        <div className="text-center lg:text-left">
-          <h1 className="text-5xl font-bold">Sign Up now!</h1>
-          <p className="py-6">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi.
-          </p>
+        <div className="text-center ">
+          <h1 className="text-3xl font-bold">Sign Up now!</h1>
+          <div className="w-96">
+          <Lottie animationData={lottieSignup} loop={true} ></Lottie>
+        </div>
         </div>
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
           <form onSubmit={handleSubmit(onSubmit)} className="card-body">
@@ -157,7 +157,7 @@ const SignUp = () => {
               {/* <button className="btn btn-primary">SignUp</button> */}
             </div>
           </form>
-          <p className="text-center"> Already Have an Account <Link to="/login"> login</Link> </p>
+          <p className="text-center"> Already Have an Account ! <Link to="/login"> <span className="text-red-500 font-bold">login</span></Link> </p>
           <GoogleLogin></GoogleLogin>
         </div>
       </div>
